@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 from typing import Dict, List
 
 from app import db
-from app.connections.models import Connection, Location
-from app.connections.schemas import LocationSchema
+from app.connections.models import Location
+from app.connections.schemas import LocationSchema, ConnectionSchema
 from geoalchemy2.functions import ST_Point
 from sqlalchemy.sql import text
 
@@ -15,7 +15,7 @@ logger = logging.getLogger("connections-api")
 class ConnectionService:
     @staticmethod
     def find_contacts(person_id: int, start_date: datetime, end_date: datetime, meters=5
-    ) -> List[Connection]:
+    ) -> List[ConnectionSchema]:
         """
         Finds all Person who have been within a given distance of a given Person within a date range.
 
@@ -57,7 +57,7 @@ class ConnectionService:
         AND     TO_DATE(:end_date, 'YYYY-MM-DD') > creation_time;
         """
         )
-        result: List[Connection] = []
+        result: List[ConnectionSchema] = []
         for line in tuple(data):
             for (
                 exposed_person_id,
@@ -65,7 +65,7 @@ class ConnectionService:
                 exposed_lat,
                 exposed_long,
                 exposed_time,
-            ) in db.engine.execute(query, **line):
+            ) in db.engine.execute(query, **line): 
                 location = Location(
                     id=location_id,
                     person_id=exposed_person_id,
@@ -74,7 +74,7 @@ class ConnectionService:
                 location.set_wkt_with_coords(exposed_lat, exposed_long)
 
                 result.append(
-                    Connection(
+                    ConnectionSchema(
                         person=person_map[exposed_person_id], location=location,
                     )
                 )

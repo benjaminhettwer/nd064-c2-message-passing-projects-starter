@@ -49,7 +49,7 @@ class Location(db.Model):
         return coord_text[coord_text.find("(") + 1 : coord_text.find(" ")]
 
 
-@dataclass
-class Connection:
-    location: Location
-    person: Person
+# @dataclass
+# class Connection:
+#     location: Location
+#     person: Person

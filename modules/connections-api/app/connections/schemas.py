@@ -1,4 +1,4 @@
-from app.connections.models import Connection, Location, Person
+from app.connections.models import Location
 from geoalchemy2.types import Geometry as GeometryType
 from marshmallow import Schema, fields
 from marshmallow_sqlalchemy.convert import ModelConverter as BaseModelConverter
@@ -21,8 +21,8 @@ class PersonSchema(Schema):
     last_name = fields.String()
     company_name = fields.String()
 
-    class Meta:
-        model = Person
+   # class Meta:
+   #     model = Person
 
 
 class ConnectionSchema(Schema):
