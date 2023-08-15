@@ -7,9 +7,9 @@ docker exec -it postgres-postgis psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f db
 docker exec -it postgres-postgis psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f db/udaconnect_public_location.sql
 
 
-## Docker commands used to build and run the application
-docker build -t persons-api .
-docker run -d -p 30005:5000 --name persons-api --env-file .env persons-api
+## Docker commands used to build the application
+docker build -t connections-api .
+docker run -d -p 30006:5000 --name connections-api --env-file .env connections-api
 
 ## Env variables required to start the application
 DB_USERNAME
@@ -17,6 +17,3 @@ DB_PASSWORD
 DB_HOST
 DB_PORT
 DB_NAME
-
-## GRPC commands (executed from inside /persons-api folder)
-python -m grpc_tools.protoc -I ../protobufs  --python_out=./ --grpc_python_out=./ ../protobufs/person.proto 
