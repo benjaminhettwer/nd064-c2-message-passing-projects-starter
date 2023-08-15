@@ -25,24 +25,26 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
             "company_name": request.company_name,
         }
         logger.info('Requested persons create: ' + str(request_value))
-        new_person: Person = PersonService.create(request_value)
-        return person_pb2.PersonMessage(new_person)
-    
+        with app.app_context():
+            new_person: Person = PersonService.create(request_value)
+            return person_pb2.PersonMessage(new_person)
+        
     def Retrieve(self, request, context):
         logger.info('Requested persons retrive: ' + str(request.id))
-        person = PersonService.retrieve(request.id)
-        if not person:
-            error_message = 'User ID not found!'
-            context.set_details(error_message)
-            context.set_code(grpc.StatusCode.NOT_FOUND)
-            return person_pb2.PersonMessage()
-        
-        return person_pb2.PersonMessage(
-            id=person.id,
-            first_name=person.first_name,
-            last_name=person.last_name,
-            company_name=person.company_name
-        )
+        with app.app_context():
+            person = PersonService.retrieve(request.id)
+            if not person:
+                error_message = 'User ID not found!'
+                context.set_details(error_message)
+                context.set_code(grpc.StatusCode.NOT_FOUND)
+                return person_pb2.PersonMessage()
+            
+            return person_pb2.PersonMessage(
+                id=person.id,
+                first_name=person.first_name,
+                last_name=person.last_name,
+                company_name=person.company_name
+            )
         
     def Retrieve_all(self, request, context):
         logger.info('Requested person retrieve all')
