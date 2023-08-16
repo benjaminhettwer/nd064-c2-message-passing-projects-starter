@@ -4,7 +4,6 @@ from app.connections.models import Location
 from app.connections.schemas import (
     ConnectionSchema,
     LocationSchema,
-    PersonSchema,
 )
 from app.connections.services import ConnectionService, LocationService
 from flask import request

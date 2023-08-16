@@ -17,3 +17,7 @@ DB_PASSWORD
 DB_HOST
 DB_PORT
 DB_NAME
+
+## GRPC commands (executed from inside /grpc_client folder)
+python -m grpc_tools.protoc -I ../../../../protobufs/  --python_out=./ --grpc_python_out=./ ../../../../protobufs/person.proto
+# Modify import statement in person_pb2_grpc.py: 'import person_pb2 as person__pb2'  =>'from . import person_pb2 as person__pb2 (see https://github.com/protocolbuffers/protobuf/issues/1491 )

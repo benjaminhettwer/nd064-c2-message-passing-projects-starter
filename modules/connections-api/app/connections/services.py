@@ -4,9 +4,10 @@ from typing import Dict, List
 
 from app import db
 from app.connections.models import Location
-from app.connections.schemas import LocationSchema, ConnectionSchema
+from app.connections.schemas import LocationSchema, ConnectionSchema, PersonSchema
+import app.connections.grpc_client.person_grpc_client as PersonClient
 from geoalchemy2.functions import ST_Point
-from sqlalchemy.sql import text
+from sqlalchemy.sql import text 
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("connections-api")
@@ -31,7 +32,9 @@ class ConnectionService:
 
         # Cache all users in memory for quick lookup
         # TODO: Retrieve from persons microservice
-        person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
+        #person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
+        person_map: Dict[str, PersonSchema] = {person.id: person for person in PersonClient.PersonService.retrieve_all()}
+        print(person_map)
 
         # Prepare arguments for queries
         data = []
@@ -73,11 +76,10 @@ class ConnectionService:
                 )
                 location.set_wkt_with_coords(exposed_lat, exposed_long)
 
-                result.append(
-                    ConnectionSchema(
-                        person=person_map[exposed_person_id], location=location,
-                    )
-                )
+                conn = ConnectionSchema()
+                conn.person = person_map[exposed_person_id]
+                conn.location = location
+                result.append(conn)
 
         return result
 

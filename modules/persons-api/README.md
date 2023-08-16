@@ -18,5 +18,5 @@ DB_HOST
 DB_PORT
 DB_NAME
 
-## GRPC commands (executed from inside /persons-api folder)
-python -m grpc_tools.protoc -I ../protobufs  --python_out=./ --grpc_python_out=./ ../protobufs/person.proto 
+## GRPC commands (executed from inside /grpc_server folder)
+python -m grpc_tools.protoc -I ../../protobufs  --python_out=./ --grpc_python_out=./ ../../protobufs/person.proto 

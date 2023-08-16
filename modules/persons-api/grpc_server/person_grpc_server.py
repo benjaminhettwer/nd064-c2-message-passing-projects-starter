@@ -58,7 +58,7 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
                 last_name=p.last_name,
                 company_name=p.company_name
                 )
-                result.persons.extend([p_res])
+                result.persons.append(p_res)
             
             return result
     
