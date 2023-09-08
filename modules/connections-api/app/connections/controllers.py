@@ -9,11 +9,10 @@ from app.connections.schemas import (
     LocationSchema,
 )
 from app.connections.services import ConnectionService, LocationService
-from flask import request, g
+from flask import request, g, Response
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List, Dict
-import jsonify
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -43,7 +42,7 @@ class LocationResource(Resource):
         kafka_producer.send(TOPIC_NAME, kafka_data)
         kafka_producer.flush()
         
-        return data
+        return Response(status=202)
 
     @api.param("location_id", "Unique ID for a given Location", _in="query")
     @responds(schema=LocationSchema)
