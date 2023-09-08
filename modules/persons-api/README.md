@@ -18,5 +18,8 @@ DB_HOST
 DB_PORT
 DB_NAME
 
-## GRPC commands (executed from inside /grpc_server folder)
-python -m grpc_tools.protoc -I ../../protobufs  --python_out=./ --grpc_python_out=./ ../../protobufs/person.proto 
+## GRPC commands to generate files (executed from inside /grpc_server folder)
+python -m grpc_tools.protoc -I ../../protobufs  --python_out=./ --grpc_python_out=./ ../../protobufs/person.proto
+
+## GRPC commands to start server (executed from inside /grpc_server folder)
+python3 person_grpc_server.py 

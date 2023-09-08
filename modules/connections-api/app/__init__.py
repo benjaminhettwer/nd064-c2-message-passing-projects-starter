@@ -1,9 +1,12 @@
-from flask import Flask, jsonify
+import os
+from flask import Flask, jsonify, g
 from flask_cors import CORS
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
+from kafka import KafkaProducer
 
 db = SQLAlchemy()
+KAFKA_SERVER_URL = os.environ["KAFKA_SERVER_URL"]
 
 
 def create_app(env=None):
@@ -22,5 +25,13 @@ def create_app(env=None):
     @app.route("/health")
     def health():
         return jsonify("healthy")
+    
+    @app.before_request
+    def before_request():
+        # Set up a Kafka producer
+        producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER_URL)
+        # Setting Kafka to g enables us to use this
+        # in other parts of our application
+        g.kafka_producer = producer
 
     return app
