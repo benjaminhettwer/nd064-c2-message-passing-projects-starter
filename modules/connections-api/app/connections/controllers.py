@@ -27,6 +27,8 @@ logger = logging.getLogger("connections-api")
 
 #@api.route("/locations")
 @api.route("/locations/", methods=['GET', 'POST'])
+@api.route("/locations/<location_id>")
+@api.param("location_id", "Unique ID for a given Location", _in="query")
 class LocationResource(Resource):
     @accepts(schema=LocationSchema)
     @responds(schema=LocationSchema)
@@ -44,7 +46,6 @@ class LocationResource(Resource):
         
         return Response(status=202)
 
-    @api.param("location_id", "Unique ID for a given Location", _in="query")
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:
         location: Location = LocationService.retrieve(location_id)
