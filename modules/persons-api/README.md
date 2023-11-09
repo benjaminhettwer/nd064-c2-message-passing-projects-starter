@@ -7,9 +7,9 @@ docker exec -it postgres-postgis psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f db
 docker exec -it postgres-postgis psql -U $POSTGRES_USER -d $POSTGRES_DB -a -f db/udaconnect_public_location.sql
 
 
-## Docker commands used to build and run the application
+## Docker commands used to build and run the application (requires DB container to be up)
 docker build -t persons-api .
-docker run -d -p 30005:5000 --name persons-api --env-file .env persons-api
+docker run -d -p 30005:5000 -p 30006:5005 --name persons-api --env-file .env persons-api
 
 ## Env variables required to start the application
 DB_USERNAME
