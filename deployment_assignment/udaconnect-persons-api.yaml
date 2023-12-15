@@ -35,7 +35,7 @@ spec:
         service: udaconnect-persons-api
     spec:
       containers:
-      - image: benh89/persons-api:latest
+      - image: benhe89/persons-api:latest
         name: udaconnect-api
         imagePullPolicy: Always
         env:
