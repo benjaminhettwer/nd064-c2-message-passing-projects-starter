@@ -2,41 +2,37 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: udaconnect-persons-api
-  name: udaconnect-persons-api
+    service: udaconnect-connections-api
+  name: udaconnect-connections-api
 spec:
   ports:
-  - name: "5000"
-    port: 5000
+  - name: "5010"
+    port: 5010
     targetPort: 5000
-    nodePort: 30001
-  - name: "5005"
-    port: 5005
-    targetPort: 5005
     nodePort: 30002
   selector:
-    service: udaconnect-persons-api
+    service: udaconnect-connections-api
   type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: udaconnect-persons-api
-  name: udaconnect-persons-api
+    service: udaconnect-connections-api
+  name: udaconnect-connections-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: udaconnect-persons-api
+      service: udaconnect-connections-api
   template:
     metadata:
       labels:
-        service: udaconnect-persons-api
+        service: udaconnect-connections-api
     spec:
       containers:
-      - image: benhe89/persons-api:latest
-        name: udaconnect-persons-api
+      - image: benhe89/connections-api:latest
+        name: udaconnect-connections-api
         imagePullPolicy: Always
         env:
         - name: DB_USERNAME
@@ -64,4 +60,24 @@ spec:
             configMapKeyRef:
               name: db-env
               key: DB_PORT
+        - name: PERSONS_SERVICE_HOST
+           valueFrom:
+            configMapKeyRef:
+              name: persons-env
+              key: PERSONS_SERVICE_HOST
+        - name: PERSONS_SERVICE_PORT
+           valueFrom:
+            configMapKeyRef:
+              name: persons-env
+              key: PERSONS_SERVICE_PORT
+          - name: KAFKA_SERVICE_HOST
+           valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: KAFKA_SERVICE_HOST
+        - name: KAFKA_SERVICE_PORT
+           valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: KAFKA_SERVICE_PORT
       restartPolicy: Always
