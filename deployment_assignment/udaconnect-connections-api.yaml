@@ -70,7 +70,7 @@ spec:
             configMapKeyRef:
               name: persons-env
               key: PERSONS_SERVICE_PORT
-          - name: KAFKA_SERVICE_HOST
+        - name: KAFKA_SERVICE_HOST
            valueFrom:
             configMapKeyRef:
               name: kafka-env
