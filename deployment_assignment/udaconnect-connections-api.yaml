@@ -61,26 +61,25 @@ spec:
               name: db-env
               key: DB_PORT
         - name: PERSONS_SERVICE_HOST
-           valueFrom:
+          valueFrom:
             configMapKeyRef:
               name: persons-env
               key: PERSONS_SERVICE_HOST
         - name: PERSONS_SERVICE_PORT
-           valueFrom:
+          valueFrom:
             configMapKeyRef:
               name: persons-env
               key: PERSONS_SERVICE_PORT
         - name: KAFKA_SERVICE_HOST
-           valueFrom:
+          valueFrom:
             configMapKeyRef:
               name: kafka-env
               key: KAFKA_SERVICE_HOST
         - name: KAFKA_SERVICE_PORT
-           valueFrom:
+          valueFrom:
             configMapKeyRef:
               name: kafka-env
               key: KAFKA_SERVICE_PORT
         - name: KAFKA_TOPIC
           value: CONNECTIONS_TOPIC
-        
       restartPolicy: Always
