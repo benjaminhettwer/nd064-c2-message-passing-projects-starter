@@ -80,4 +80,7 @@ spec:
             configMapKeyRef:
               name: kafka-env
               key: KAFKA_SERVICE_PORT
+        - name: KAFKA_TOPIC
+          value: CONNECTIONS_TOPIC
+        
       restartPolicy: Always
