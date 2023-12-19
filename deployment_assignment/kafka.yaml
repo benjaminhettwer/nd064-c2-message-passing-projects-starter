@@ -10,6 +10,9 @@ spec:
     - name: "9092"
       port: 9092
       targetPort: 9092
+    - name: "9093"
+      port: 9093
+      targetPort: 9093
     - name: "9094"
       port: 9094
       targetPort: 9094
@@ -26,6 +29,7 @@ spec:
       image: docker.io/bitnami/kafka:latest
       ports:
         - containerPort: 9092
+        - containerPort: 9093
         - containerPort: 9094
       volumeMounts:
         - name: kafka-data
@@ -36,11 +40,11 @@ spec:
         - name: KAFKA_CFG_PROCESS_ROLES
           value: "controller,broker"
         - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
-          value: "kafka-service:9093"
+          value: "0@kafka-service:9093"
         - name: KAFKA_CFG_LISTENERS
           value: "PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094"
         - name: KAFKA_CFG_ADVERTISED_LISTENERS
-          value: "PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094"
+          value: "PLAINTEXT://kafka-service:9092,EXTERNAL://localhost:9094"
         - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
           value: "CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT"
         - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
