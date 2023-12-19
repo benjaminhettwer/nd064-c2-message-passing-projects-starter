@@ -3,5 +3,6 @@ kind: ConfigMap
 data:
   KAFKA_SERVICE_HOST: "kafka-service"
   KAFKA_SERVICE_PORT: "9094"
+  TOPIC_NAME: "Connections"
 metadata:
   name: kafka-env
