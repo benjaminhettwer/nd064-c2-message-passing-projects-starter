@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: UdaConnect API
+  description: Connections via geolocation
+paths:
+  /locations/:
+    get:
+      summary: Get all locations
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Location'
+    post:
+      summary: Create a new location
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Location'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Invalid input
+  /locations/{location_id}:
+    get:
+      summary: Get a location by ID
+      parameters:
+        - name: location_id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Location'
+    put:
+      summary: Update a location by ID
+      parameters:
+        - name: location_id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Location'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Location'
+        '400':
+          description: Invalid input
+        '404':
+          description: Location not found
+  /connection/{person_id}:
+    get:
+      summary: Get connection data by person ID
+      parameters:
+        - name: person_id
+          in: path
+          required: true
+          type: string
+        - name: start_date
+          in: query
+          required: true
+          type: string
+          format: date
+        - name: end_date
+          in: query
+          required: true
+          type: string
+          format: date
+        - name: distance
+          in: query
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Connection'
+definitions:
+  Location:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      latitude:
+        type: number
+        format: double
+      longitude:
+        type: number
+        format: double
+  Connection:
+    type: object
+    properties:
+      id:
+        type: string
+      person_id:
+        type: string
+      location_id:
+        type: string
+      date:
+        type: string
+        format: date

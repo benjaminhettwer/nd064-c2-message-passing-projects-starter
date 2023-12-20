@@ -1,0 +1,10 @@
+Person Microservice: The Person Microservice encapsulates all the necessary functionality related to persons, including CRUD operations. 
+It offers its services through a user-friendly REST interface and a reliable GRPC server.
+
+Connections Microservice: The Connections Microservice provides a convenient way to add locations through a REST interface. 
+This microservice efficiently forwards incoming requests to a Kafka queue, ensuring that it can handle a substantial number of concurrent PUT requests,
+potentially reaching millions.
+
+Additionally, the Connections Microservice also offers the capability to find connections using the connections service. 
+To achieve this, it utilizes the person microservice, accessed through a grpc client, as well as the locations service. 
+To simplify the sharing of models, both the location service and the connection service have been integrated into the same microservice.

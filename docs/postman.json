@@ -1,0 +1,28 @@
+{
+	"info": {
+		"_postman_id": "008828ab-d9f1-4d76-9e1a-f4371d68a3a9",
+		"name": "Connections API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28888579"
+	},
+	"item": [
+		{
+			"name": "api/locations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n  \"id\": \"800\",  \r\n  \"person_id\": \"5\",\r\n  \"longitude\" : \"37.553441\",\r\n  \"latitude\" : \"-122.290524\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5003/api/locations/"
+			},
+			"response": []
+		}
+	]
+}
